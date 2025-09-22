@@ -5,7 +5,8 @@ function Home({ navigateTo, score }) {
     { id: 'addition', name: 'Addition', icon: '➕', color: 'primary' },
     { id: 'before', name: 'Comes Before', icon: '⬅️', color: 'success' },
     { id: 'after', name: 'Comes After', icon: '➡️', color: 'warning' },
-    { id: 'between', name: 'Comes Between', icon: '↔️', color: 'info' }
+    { id: 'between', name: 'Comes Between', icon: '↔️', color: 'info' },
+    { id: 'missing', name: 'Missing Number', icon: '❓', color: 'secondary' }
   ];
 
   return (
@@ -30,11 +31,11 @@ function Home({ navigateTo, score }) {
 
             <div className="row g-3">
               {modules.map((module) => (
-                <div key={module.id} className="col-12 col-md-6">
+                <div key={module.id} className="col-12 col-md-6 col-lg-4">
                   <button
                     className={`btn btn-${module.color} btn-custom w-100 py-4`}
                     onClick={() => navigateTo(module.id)}
-                    style={{ fontSize: '20px', minHeight: '100px' }}
+                    style={{ fontSize: '18px', minHeight: '100px' }}
                   >
                     <div className="fs-1 mb-2">{module.icon}</div>
                     {module.name}

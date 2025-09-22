@@ -56,6 +56,21 @@ function MathModule({ module, navigateTo, addScore }) {
           correct: String(middle)
         };
         
+      case 'missing':
+        const missingNum = Math.floor(Math.random() * 150) + 1;
+        const position = Math.floor(Math.random() * 5);
+        const sequence = [];
+        for (let i = 0; i < 5; i++) {
+          sequence.push(i === position ? '__' : String(missingNum - 2 + i));
+        }
+        const missingOptions = [missingNum - 1, missingNum, missingNum + 1, missingNum + 2].filter(x => x > 0 && x <= 150);
+        return {
+          question: 'What is the missing number?',
+          image: sequence.join(' '),
+          options: missingOptions.slice(0, 4).sort(() => Math.random() - 0.5).map(String),
+          correct: String(missingNum)
+        };
+        
       default:
         return null;
     }
@@ -65,7 +80,8 @@ function MathModule({ module, navigateTo, addScore }) {
     addition: 'Addition',
     before: 'Comes Before',
     after: 'Comes After',
-    between: 'Comes Between'
+    between: 'Comes Between',
+    missing: 'Missing Number'
   };
 
   useEffect(() => {
@@ -93,6 +109,8 @@ function MathModule({ module, navigateTo, addScore }) {
     if (answer === currentQuestion.correct) {
       addScore(10);
       playSound('Good job!');
+    } else {
+      playSound('Try again!');
     }
     
     setTimeout(() => {
