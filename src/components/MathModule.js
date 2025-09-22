@@ -5,6 +5,7 @@ function MathModule({ module, navigateTo, addScore }) {
   const [showResult, setShowResult] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [questionCount, setQuestionCount] = useState(0);
+  const [showCrackers, setShowCrackers] = useState(false);
 
   const generateQuestion = (type) => {
     const shapes = ['🍎', '⭐', '🔵', '🟡', '❤️', '🔶', '🟢', '🟠', '💜', '🔴'];
@@ -102,6 +103,24 @@ function MathModule({ module, navigateTo, addScore }) {
     }
   };
 
+  const playCrackerSound = () => {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  };
+
   const handleAnswer = (answer) => {
     setSelectedAnswer(answer);
     setShowResult(true);
@@ -109,6 +128,9 @@ function MathModule({ module, navigateTo, addScore }) {
     if (answer === currentQuestion.correct) {
       addScore(10);
       playSound('Good job!');
+      playCrackerSound();
+      setShowCrackers(true);
+      setTimeout(() => setShowCrackers(false), 2000);
     } else {
       playSound('Try again!');
     }
@@ -166,10 +188,22 @@ function MathModule({ module, navigateTo, addScore }) {
                 ))}
               </div>
             ) : (
-              <div className="display-6 p-3">
+              <div className="display-6 p-3 position-relative">
                 {selectedAnswer === currentQuestion.correct ? (
                   <div className="text-success">
                     🎉 Great job! +10 ⭐
+                    {showCrackers && (
+                      <div className="position-absolute bottom-0 start-50 translate-middle-x">
+                        <div className="cracker-video">
+                          <div className="cracker-burst">🎆</div>
+                          <div className="cracker-sparks">
+                            <span>✨</span><span>✨</span><span>✨</span>
+                            <span>✨</span><span>✨</span><span>✨</span>
+                          </div>
+                          <div className="cracker-text">Crackers!</div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="text-danger">
