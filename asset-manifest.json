@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/kidwork/static/css/main.5ee747ba.css",
-    "main.js": "/kidwork/static/js/main.80a964f5.js",
+    "main.css": "/kidwork/static/css/main.a19b1fbd.css",
+    "main.js": "/kidwork/static/js/main.769074d0.js",
     "index.html": "/kidwork/index.html",
-    "main.5ee747ba.css.map": "/kidwork/static/css/main.5ee747ba.css.map",
-    "main.80a964f5.js.map": "/kidwork/static/js/main.80a964f5.js.map"
+    "main.a19b1fbd.css.map": "/kidwork/static/css/main.a19b1fbd.css.map",
+    "main.769074d0.js.map": "/kidwork/static/js/main.769074d0.js.map"
   },
   "entrypoints": [
-    "static/css/main.5ee747ba.css",
-    "static/js/main.80a964f5.js"
+    "static/css/main.a19b1fbd.css",
+    "static/js/main.769074d0.js"
   ]
 }
