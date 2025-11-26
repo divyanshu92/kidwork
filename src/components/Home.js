@@ -6,7 +6,10 @@ function Home({ navigateTo, score }) {
     { id: 'before', name: 'Comes Before', icon: '⬅️', color: 'success' },
     { id: 'after', name: 'Comes After', icon: '➡️', color: 'warning' },
     { id: 'between', name: 'Comes Between', icon: '↔️', color: 'info' },
-    { id: 'missing', name: 'Missing Number', icon: '❓', color: 'secondary' }
+    { id: 'missing', name: 'Missing Number', icon: '❓', color: 'secondary' },
+    { id: 'english', name: 'English Words', icon: '📚', color: 'danger' },
+    { id: 'hindi', name: 'Hindi Words', icon: '🇮🇳', color: 'dark' },
+    { id: 'vyanjan', name: 'Vyanjan', icon: '🔤', color: 'success' }
   ];
 
   return (

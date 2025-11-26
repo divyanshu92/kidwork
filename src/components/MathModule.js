@@ -16,12 +16,12 @@ function MathModule({ module, navigateTo, addScore }) {
         const b = Math.floor(Math.random() * 5) + 1;
         const sum = a + b;
         const shape = shapes[Math.floor(Math.random() * shapes.length)];
-        const wrongOptions = [sum - 2, sum - 1, sum + 1, sum + 2].filter(x => x > 0 && x !== sum);
-        const options = [sum, ...wrongOptions.slice(0, 3)].sort(() => Math.random() - 0.5);
+        const additionWrongOptions = [sum - 2, sum - 1, sum + 1, sum + 2].filter(x => x > 0 && x !== sum);
+        const additionOptions = [sum, ...additionWrongOptions.slice(0, 3)].sort(() => Math.random() - 0.5);
         return {
           question: `What is ${a} + ${b}?`,
           image: `${shape.repeat(a)} + ${shape.repeat(b)}`,
-          options: options.map(String),
+          options: additionOptions.map(String),
           correct: String(sum)
         };
         
@@ -57,19 +57,172 @@ function MathModule({ module, navigateTo, addScore }) {
           correct: String(middle)
         };
         
+      case 'english':
+        const words = {
+          3: [
+            { word: 'CAT', image: '🐱' },
+            { word: 'DOG', image: '🐶' },
+            { word: 'SUN', image: '☀️' },
+            { word: 'CAR', image: '🚗' },
+            { word: 'BAT', image: '🦇' },
+            { word: 'HAT', image: '🎩' },
+            { word: 'CUP', image: '☕' },
+            { word: 'BUS', image: '🚌' }
+          ],
+          4: [
+            { word: 'FISH', image: '🐟' },
+            { word: 'BIRD', image: '🐦' },
+            { word: 'TREE', image: '🌳' },
+            { word: 'BOOK', image: '📚' },
+            { word: 'BALL', image: '⚽' },
+            { word: 'CAKE', image: '🎂' },
+            { word: 'DUCK', image: '🦆' },
+            { word: 'FROG', image: '🐸' }
+          ]
+        };
+        
+        const wordLength = Math.random() < 0.5 ? 3 : 4;
+        const wordList = words[wordLength];
+        const correctWord = wordList[Math.floor(Math.random() * wordList.length)];
+        
+        const wrongWords = wordList
+          .filter(w => w.word !== correctWord.word)
+          .slice(0, 3)
+          .map(w => w.word);
+        
+        const englishOptions = [correctWord.word, ...wrongWords]
+          .sort(() => Math.random() - 0.5);
+        
+        return {
+          question: `What is this ${wordLength}-letter word?`,
+          image: correctWord.image,
+          options: englishOptions,
+          correct: correctWord.word
+        };
+        
+      case 'hindi':
+        const hindiWords = {
+          3: [
+            { word: 'बिल्ली', image: '🐱' },
+            { word: 'कुत्ता', image: '🐶' },
+            { word: 'सूरज', image: '☀️' },
+            { word: 'गाड़ी', image: '🚗' },
+            { word: 'पंछी', image: '🐦' },
+            { word: 'पेड़', image: '🌳' },
+            { word: 'पानी', image: '💧' },
+            { word: 'घर', image: '🏠' }
+          ],
+          4: [
+            { word: 'मछली', image: '🐟' },
+            { word: 'किताब', image: '📚' },
+            { word: 'फूल', image: '🌸' },
+            { word: 'खिलौना', image: '🧨' },
+            { word: 'सेब', image: '🍎' },
+            { word: 'केला', image: '🍌' },
+            { word: 'बर्फ', image: '❄️' },
+            { word: 'चाँद', image: '🌙' }
+          ]
+        };
+        
+        const hindiWordLength = Math.random() < 0.5 ? 3 : 4;
+        const hindiWordList = hindiWords[hindiWordLength];
+        const correctHindiWord = hindiWordList[Math.floor(Math.random() * hindiWordList.length)];
+        
+        const wrongHindiWords = hindiWordList
+          .filter(w => w.word !== correctHindiWord.word)
+          .slice(0, 3)
+          .map(w => w.word);
+        
+        const hindiOptions = [correctHindiWord.word, ...wrongHindiWords]
+          .sort(() => Math.random() - 0.5);
+        
+        return {
+          question: `यह क्या है?`,
+          image: correctHindiWord.image,
+          options: hindiOptions,
+          correct: correctHindiWord.word
+        };
+        
+      case 'vyanjan':
+        const vyanjans = [
+          { letter: 'क', word: 'कमल', image: '🌸' },
+          { letter: 'ख', word: 'खरगोश', image: '🐰' },
+          { letter: 'ग', word: 'गाय', image: '🐄' },
+          { letter: 'घ', word: 'घर', image: '🏠' },
+          { letter: 'च', word: 'चाँद', image: '🌙' },
+          { letter: 'छ', word: 'छतरी', image: '☂️' },
+          { letter: 'ज', word: 'जल', image: '💧' },
+          { letter: 'झ', word: 'झंडा', image: '🏴' },
+          { letter: 'ट', word: 'टोपी', image: '👑' },
+          { letter: 'ठ', word: 'ठंड', image: '❄️' },
+          { letter: 'ड', word: 'डाल', image: '🌿' },
+          { letter: 'ढ', word: 'ढोल', image: '🥁' },
+          { letter: 'त', word: 'तारा', image: '⭐' },
+          { letter: 'थ', word: 'थाली', image: '🍽️' },
+          { letter: 'द', word: 'दीया', image: '🕯️' },
+          { letter: 'ध', word: 'धनुष', image: '🏹' },
+          { letter: 'न', word: 'नाव', image: '🚢' },
+          { letter: 'प', word: 'पंछी', image: '🐦' },
+          { letter: 'फ', word: 'फूल', image: '🌺' },
+          { letter: 'ब', word: 'बिल्ली', image: '🐱' },
+          { letter: 'भ', word: 'भालू', image: '🐻' },
+          { letter: 'म', word: 'मछली', image: '🐟' },
+          { letter: 'य', word: 'यंत्र', image: '⚙️' },
+          { letter: 'र', word: 'रथ', image: '🚜' },
+          { letter: 'ल', word: 'लड़का', image: '👦' },
+          { letter: 'व', word: 'वन', image: '🌲' },
+          { letter: 'श', word: 'शेर', image: '🦁' },
+          { letter: 'ष', word: 'षहद', image: '🍯' },
+          { letter: 'स', word: 'सूरज', image: '☀️' },
+          { letter: 'ह', word: 'हाथी', image: '🐘' }
+        ];
+        
+        const correctVyanjan = vyanjans[Math.floor(Math.random() * vyanjans.length)];
+        
+        const wrongVyanjans = vyanjans
+          .filter(v => v.letter !== correctVyanjan.letter)
+          .slice(0, 3)
+          .map(v => v.letter);
+        
+        const vyanjanOptions = [correctVyanjan.letter, ...wrongVyanjans]
+          .sort(() => Math.random() - 0.5);
+        
+        return {
+          question: `${correctVyanjan.word} का पहला अक्षर कौन सा है?`,
+          image: correctVyanjan.image,
+          options: vyanjanOptions,
+          correct: correctVyanjan.letter
+        };
+        
       case 'missing':
-        const missingNum = Math.floor(Math.random() * 150) + 1;
-        const position = Math.floor(Math.random() * 5);
+        const startNum = Math.floor(Math.random() * 20) + 5;
+        const missingPos = Math.floor(Math.random() * 3) + 1;
         const sequence = [];
+        const correctAnswer = startNum + missingPos;
+        
         for (let i = 0; i < 5; i++) {
-          sequence.push(i === position ? '__' : String(missingNum - 2 + i));
+          if (i === missingPos) {
+            sequence.push('__');
+          } else {
+            sequence.push(String(startNum + i));
+          }
         }
-        const missingOptions = [missingNum - 1, missingNum, missingNum + 1, missingNum + 2].filter(x => x > 0 && x <= 150);
+        
+        const missingWrongOptions = [
+          correctAnswer - 2,
+          correctAnswer - 1, 
+          correctAnswer + 1,
+          correctAnswer + 2
+        ].filter(x => x > 0);
+        
+        const missingOptions = [correctAnswer, ...missingWrongOptions.slice(0, 3)]
+          .sort(() => Math.random() - 0.5);
+        
         return {
           question: 'What is the missing number?',
           image: sequence.join(' '),
-          options: missingOptions.slice(0, 4).sort(() => Math.random() - 0.5).map(String),
-          correct: String(missingNum)
+          options: missingOptions.map(String),
+          correct: String(correctAnswer)
         };
         
       default:
@@ -82,7 +235,10 @@ function MathModule({ module, navigateTo, addScore }) {
     before: 'Comes Before',
     after: 'Comes After',
     between: 'Comes Between',
-    missing: 'Missing Number'
+    missing: 'Missing Number',
+    english: 'English Words',
+    hindi: 'Hindi Words',
+    vyanjan: 'Vyanjan'
   };
 
   useEffect(() => {
@@ -104,21 +260,25 @@ function MathModule({ module, navigateTo, addScore }) {
   };
 
   const playCrackerSound = () => {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.1);
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.1);
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    } catch (error) {
+      console.log('Audio not supported');
+    }
   };
 
   const handleAnswer = (answer) => {
@@ -169,7 +329,7 @@ function MathModule({ module, navigateTo, addScore }) {
               {currentQuestion.question}
             </div>
             
-            <div className="display-6 mb-4 p-3 bg-light rounded-3">
+            <div className={`mb-4 p-3 bg-light rounded-3 ${module === 'english' || module === 'hindi' || module === 'vyanjan' ? 'display-1' : 'display-6'}`}>
               {currentQuestion.image}
             </div>
             
