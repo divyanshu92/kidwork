@@ -4,7 +4,7 @@ A comprehensive React-based educational app for UKG (Upper Kindergarten) student
 
 ## Features
 
-- **8 Learning Modules**: Math (Addition, Comes Before/After/Between, Missing Number, Comparison) + Language (English Words, Hindi Words, Vyanjan)
+- **9 Learning Modules**: Math (Addition, Comes Before/After/Between, Missing Number, Comparison) + Language (English Words, Hindi Words, Vyanjan, Hindi Alphabet)
 - **Interactive Scoring**: Star-based reward system (10 points per correct answer)
 - **Visual Effects**: Animated crackers and confetti for correct answers
 - **Audio Feedback**: Text-to-speech encouragement and sound effects
@@ -71,6 +71,13 @@ A comprehensive React-based educational app for UKG (Upper Kindergarten) student
 - Letter-to-word association
 - Visual learning with examples
 - Examples: क for कमल 🌸, ग for गाय 🐄
+
+#### Hindi Alphabet 🔤
+- Complete Devanagari alphabet learning
+- Vowels (स्वर) and Consonants (व्यंजन) recognition
+- Letter-to-word matching exercises
+- Sound-based learning approach
+- Examples: अ for अनार 🍎, क for कमल 🌸
 
 ## Getting Started
 

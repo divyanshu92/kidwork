@@ -10,7 +10,8 @@ function Home({ navigateTo, score }) {
     { id: 'comparison', name: 'Comparison', icon: '⚖️', color: 'primary' },
     { id: 'english', name: 'English Words', icon: '📚', color: 'danger' },
     { id: 'hindi', name: 'Hindi Words', icon: '🇮🇳', color: 'dark' },
-    { id: 'vyanjan', name: 'Vyanjan', icon: '🔤', color: 'success' }
+    { id: 'vyanjan', name: 'Vyanjan', icon: '🔤', color: 'success' },
+    { id: 'alphabet', name: 'Hindi Alphabet', icon: '🔤', color: 'info' }
   ];
 
   return (

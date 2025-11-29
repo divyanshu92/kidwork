@@ -194,6 +194,15 @@ function MathModule({ module, navigateTo, addScore }) {
           correct: correctVyanjan.letter
         };
         
+      case 'alphabet':
+        return {
+          question: 'Click on letters to hear their sounds!',
+          image: 'Interactive Hindi Alphabet',
+          options: [],
+          correct: '',
+          isInteractive: true
+        };
+        
       case 'missing':
         const startNum = Math.floor(Math.random() * 20) + 5;
         const missingPos = Math.floor(Math.random() * 3) + 1;
@@ -269,7 +278,8 @@ function MathModule({ module, navigateTo, addScore }) {
     comparison: 'Comparison',
     english: 'English Words',
     hindi: 'Hindi Words',
-    vyanjan: 'Vyanjan'
+    vyanjan: 'Vyanjan',
+    alphabet: 'Hindi Alphabet'
   };
 
   useEffect(() => {
@@ -334,6 +344,92 @@ function MathModule({ module, navigateTo, addScore }) {
     }, 2000);
   };
 
+  const handleLetterClick = (letter, word) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(`${letter} ${word}`);
+      utterance.lang = 'hi-IN';
+      utterance.rate = 0.02;
+      utterance.pitch = 1.0;
+      speechSynthesis.speak(utterance);
+    }
+    addScore(5);
+    playCrackerSound();
+  };
+
+  const renderAlphabetGrid = () => {
+    const vowels = [
+      { letter: 'अ', word: 'अनार' },
+      { letter: 'आ', word: 'आम' },
+      { letter: 'इ', word: 'इमली' },
+      { letter: 'ई', word: 'ईख' },
+      { letter: 'उ', word: 'उल्लू' },
+      { letter: 'ऊ', word: 'ऊन' },
+      { letter: 'ए', word: 'एक' },
+      { letter: 'ऐ', word: 'ऐनक' },
+      { letter: 'ओ', word: 'ओखली' },
+      { letter: 'औ', word: 'औरत' }
+    ];
+    
+    const consonants = [
+      { letter: 'क', word: 'कमल' },
+      { letter: 'ख', word: 'खरगोश' },
+      { letter: 'ग', word: 'गाय' },
+      { letter: 'घ', word: 'घर' },
+      { letter: 'च', word: 'चाँद' },
+      { letter: 'छ', word: 'छतरी' },
+      { letter: 'ज', word: 'जल' },
+      { letter: 'झ', word: 'झंडा' },
+      { letter: 'त', word: 'तारा' },
+      { letter: 'द', word: 'दीया' },
+      { letter: 'न', word: 'नाव' },
+      { letter: 'प', word: 'पंछी' },
+      { letter: 'फ', word: 'फूल' },
+      { letter: 'ब', word: 'बिल्ली' },
+      { letter: 'म', word: 'मछली' },
+      { letter: 'य', word: 'यंत्र' },
+      { letter: 'र', word: 'रथ' },
+      { letter: 'ल', word: 'लड़का' },
+      { letter: 'व', word: 'वन' },
+      { letter: 'श', word: 'शेर' },
+      { letter: 'स', word: 'सूरज' },
+      { letter: 'ह', word: 'हाथी' }
+    ];
+
+    return (
+      <div>
+        <h5 className="text-primary mb-3">स्वर (Vowels)</h5>
+        <div className="row g-2 mb-4">
+          {vowels.map((item, index) => (
+            <div key={index} className="col-6 col-md-4 col-lg-3">
+              <button
+                className="btn btn-success btn-custom w-100 py-2"
+                onClick={() => handleLetterClick(item.letter, item.word)}
+                style={{ fontSize: '20px', minHeight: '60px' }}
+              >
+                {item.letter}
+              </button>
+            </div>
+          ))}
+        </div>
+        
+        <h5 className="text-primary mb-3">व्यंजन (Consonants)</h5>
+        <div className="row g-2">
+          {consonants.map((item, index) => (
+            <div key={index} className="col-6 col-md-4 col-lg-3">
+              <button
+                className="btn btn-warning btn-custom w-100 py-2"
+                onClick={() => handleLetterClick(item.letter, item.word)}
+                style={{ fontSize: '20px', minHeight: '60px' }}
+              >
+                {item.letter}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   if (currentQuestion === null) return null;
 
   return (
@@ -361,7 +457,7 @@ function MathModule({ module, navigateTo, addScore }) {
             </div>
             
             <div className={`mb-4 p-3 bg-light rounded-3 ${
-              module === 'english' || module === 'hindi' || module === 'vyanjan' 
+              module === 'english' || module === 'hindi' || module === 'vyanjan' || module === 'alphabet'
                 ? 'display-1' 
                 : module === 'comparison' 
                 ? 'display-5 comparison-display' 
@@ -370,7 +466,9 @@ function MathModule({ module, navigateTo, addScore }) {
               {currentQuestion.image}
             </div>
             
-            {!showResult ? (
+            {module === 'alphabet' && currentQuestion.isInteractive ? (
+              renderAlphabetGrid()
+            ) : !showResult ? (
               <div className="row g-2">
                 {currentQuestion.options.map((option, index) => (
                   <div key={index} className="col-6">
