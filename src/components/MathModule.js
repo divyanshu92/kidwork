@@ -6,6 +6,7 @@ function MathModule({ module, navigateTo, addScore }) {
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [questionCount, setQuestionCount] = useState(0);
   const [showCrackers, setShowCrackers] = useState(false);
+  const [showImage, setShowImage] = useState(null);
 
   const generateQuestion = (type) => {
     const shapes = ['🍎', '⭐', '🔵', '🟡', '❤️', '🔶', '🟢', '🟠', '💜', '🔴'];
@@ -344,55 +345,56 @@ function MathModule({ module, navigateTo, addScore }) {
     }, 2000);
   };
 
-  const handleLetterClick = (letter, word) => {
+  const handleLetterClick = (letter, word, image) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(`${letter} ${word}`);
       utterance.lang = 'hi-IN';
-      utterance.rate = 0.02;
+      utterance.rate = 0.01;
       utterance.pitch = 1.0;
       speechSynthesis.speak(utterance);
     }
+    setShowImage({ letter, word, image });
     addScore(5);
     playCrackerSound();
   };
 
   const renderAlphabetGrid = () => {
     const vowels = [
-      { letter: 'अ', word: 'अनार' },
-      { letter: 'आ', word: 'आम' },
-      { letter: 'इ', word: 'इमली' },
-      { letter: 'ई', word: 'ईख' },
-      { letter: 'उ', word: 'उल्लू' },
-      { letter: 'ऊ', word: 'ऊन' },
-      { letter: 'ए', word: 'एक' },
-      { letter: 'ऐ', word: 'ऐनक' },
-      { letter: 'ओ', word: 'ओखली' },
-      { letter: 'औ', word: 'औरत' }
+      { letter: 'अ', word: 'अनार', image: '🍎' },
+      { letter: 'आ', word: 'आम', image: '🥭' },
+      { letter: 'इ', word: 'इमली', image: '🌿' },
+      { letter: 'ई', word: 'ईख', image: '🌾' },
+      { letter: 'उ', word: 'उल्लू', image: '🦉' },
+      { letter: 'ऊ', word: 'ऊन', image: '🧶' },
+      { letter: 'ए', word: 'एक', image: '1️⃣' },
+      { letter: 'ऐ', word: 'ऐनक', image: '👓' },
+      { letter: 'ओ', word: 'ओखली', image: '🥣' },
+      { letter: 'औ', word: 'औरत', image: '👩' }
     ];
     
     const consonants = [
-      { letter: 'क', word: 'कमल' },
-      { letter: 'ख', word: 'खरगोश' },
-      { letter: 'ग', word: 'गाय' },
-      { letter: 'घ', word: 'घर' },
-      { letter: 'च', word: 'चाँद' },
-      { letter: 'छ', word: 'छतरी' },
-      { letter: 'ज', word: 'जल' },
-      { letter: 'झ', word: 'झंडा' },
-      { letter: 'त', word: 'तारा' },
-      { letter: 'द', word: 'दीया' },
-      { letter: 'न', word: 'नाव' },
-      { letter: 'प', word: 'पंछी' },
-      { letter: 'फ', word: 'फूल' },
-      { letter: 'ब', word: 'बिल्ली' },
-      { letter: 'म', word: 'मछली' },
-      { letter: 'य', word: 'यंत्र' },
-      { letter: 'र', word: 'रथ' },
-      { letter: 'ल', word: 'लड़का' },
-      { letter: 'व', word: 'वन' },
-      { letter: 'श', word: 'शेर' },
-      { letter: 'स', word: 'सूरज' },
-      { letter: 'ह', word: 'हाथी' }
+      { letter: 'क', word: 'कमल', image: '🌸' },
+      { letter: 'ख', word: 'खरगोश', image: '🐰' },
+      { letter: 'ग', word: 'गाय', image: '🐄' },
+      { letter: 'घ', word: 'घर', image: '🏠' },
+      { letter: 'च', word: 'चाँद', image: '🌙' },
+      { letter: 'छ', word: 'छतरी', image: '☂️' },
+      { letter: 'ज', word: 'जल', image: '💧' },
+      { letter: 'झ', word: 'झंडा', image: '🏴' },
+      { letter: 'त', word: 'तारा', image: '⭐' },
+      { letter: 'द', word: 'दीया', image: '🕯️' },
+      { letter: 'न', word: 'नाव', image: '🚢' },
+      { letter: 'प', word: 'पंछी', image: '🐦' },
+      { letter: 'फ', word: 'फूल', image: '🌺' },
+      { letter: 'ब', word: 'बिल्ली', image: '🐱' },
+      { letter: 'म', word: 'मछली', image: '🐟' },
+      { letter: 'य', word: 'यंत्र', image: '⚙️' },
+      { letter: 'र', word: 'रथ', image: '🚜' },
+      { letter: 'ल', word: 'लड़का', image: '👦' },
+      { letter: 'व', word: 'वन', image: '🌲' },
+      { letter: 'श', word: 'शेर', image: '🦁' },
+      { letter: 'स', word: 'सूरज', image: '☀️' },
+      { letter: 'ह', word: 'हाथी', image: '🐘' }
     ];
 
     return (
@@ -403,7 +405,7 @@ function MathModule({ module, navigateTo, addScore }) {
             <div key={index} className="col-6 col-md-4 col-lg-3">
               <button
                 className="btn btn-success btn-custom w-100 py-2"
-                onClick={() => handleLetterClick(item.letter, item.word)}
+                onClick={() => handleLetterClick(item.letter, item.word, item.image)}
                 style={{ fontSize: '20px', minHeight: '60px' }}
               >
                 {item.letter}
@@ -418,7 +420,7 @@ function MathModule({ module, navigateTo, addScore }) {
             <div key={index} className="col-6 col-md-4 col-lg-3">
               <button
                 className="btn btn-warning btn-custom w-100 py-2"
-                onClick={() => handleLetterClick(item.letter, item.word)}
+                onClick={() => handleLetterClick(item.letter, item.word, item.image)}
                 style={{ fontSize: '20px', minHeight: '60px' }}
               >
                 {item.letter}
@@ -463,7 +465,14 @@ function MathModule({ module, navigateTo, addScore }) {
                 ? 'display-5 comparison-display' 
                 : 'display-6'
             }`}>
-              {currentQuestion.image}
+              {showImage ? (
+                <div className="text-center">
+                  <div className="display-1 mb-2">{showImage.image}</div>
+                  <div className="h4">{showImage.letter} - {showImage.word}</div>
+                </div>
+              ) : (
+                currentQuestion.image
+              )}
             </div>
             
             {module === 'alphabet' && currentQuestion.isInteractive ? (
