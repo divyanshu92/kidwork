@@ -225,6 +225,36 @@ function MathModule({ module, navigateTo, addScore }) {
           correct: String(correctAnswer)
         };
         
+      case 'comparison':
+        const num1 = Math.floor(Math.random() * 20) + 1;
+        let num2 = Math.floor(Math.random() * 20) + 1;
+        
+        while (num1 === num2) {
+          num2 = Math.floor(Math.random() * 20) + 1;
+        }
+        
+        const isSmaller = Math.random() < 0.5;
+        const correctComp = isSmaller ? Math.min(num1, num2) : Math.max(num1, num2);
+        const wrongComp = isSmaller ? Math.max(num1, num2) : Math.min(num1, num2);
+        
+        const compWrongOptions = [wrongComp];
+        while (compWrongOptions.length < 3) {
+          const wrongOption = Math.floor(Math.random() * 20) + 1;
+          if (wrongOption !== correctComp && !compWrongOptions.includes(wrongOption)) {
+            compWrongOptions.push(wrongOption);
+          }
+        }
+        
+        const compOptions = [correctComp, ...compWrongOptions.slice(0, 3)]
+          .sort(() => Math.random() - 0.5);
+        
+        return {
+          question: `Which number is ${isSmaller ? 'smaller' : 'larger'}?`,
+          image: `${num1} ${isSmaller ? '<' : '>'} ${num2}`,
+          options: compOptions.map(String),
+          correct: String(correctComp)
+        };
+        
       default:
         return null;
     }
@@ -236,6 +266,7 @@ function MathModule({ module, navigateTo, addScore }) {
     after: 'Comes After',
     between: 'Comes Between',
     missing: 'Missing Number',
+    comparison: 'Comparison',
     english: 'English Words',
     hindi: 'Hindi Words',
     vyanjan: 'Vyanjan'
@@ -329,7 +360,13 @@ function MathModule({ module, navigateTo, addScore }) {
               {currentQuestion.question}
             </div>
             
-            <div className={`mb-4 p-3 bg-light rounded-3 ${module === 'english' || module === 'hindi' || module === 'vyanjan' ? 'display-1' : 'display-6'}`}>
+            <div className={`mb-4 p-3 bg-light rounded-3 ${
+              module === 'english' || module === 'hindi' || module === 'vyanjan' 
+                ? 'display-1' 
+                : module === 'comparison' 
+                ? 'display-5 comparison-display' 
+                : 'display-6'
+            }`}>
               {currentQuestion.image}
             </div>
             
